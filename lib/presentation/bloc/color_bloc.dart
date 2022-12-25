@@ -19,5 +19,14 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
 
       emit(ColorChanged(backgroundColor: generator.getColorFromARGB()));
     });
+
+    on<ColorChangedAutomatically>((event, emit) async {
+      final generator = RandomColorGenerator();
+
+      while (true) {
+        await Future.delayed(const Duration(milliseconds: 500));
+        emit(ColorChanged(backgroundColor: generator.getColorFromARGB()));
+      }
+    });
   }
 }
