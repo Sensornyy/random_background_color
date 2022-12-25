@@ -12,7 +12,6 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
   ColorBloc() : super(ColorInitial()) {
     on<ColorStart>((event, emit) {
       emit(ColorInitial());
-      print(state);
     });
 
     on<ColorStartChangeManually>((event, emit) {
