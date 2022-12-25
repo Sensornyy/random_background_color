@@ -7,7 +7,7 @@ void main() => runApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           textTheme: const TextTheme(
-            bodyMedium: TextStyle(fontSize: 25),
+            bodyMedium: TextStyle(fontSize: 25, color: Colors.white),
           ),
         ),
         home: const HomePage(),
