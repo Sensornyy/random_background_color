@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:random_background_color/common/app_texts.dart';
-import 'package:random_background_color/common/random_color_generator.dart';
+import 'package:random_background_color/presentation/bloc/color_bloc.dart';
+import 'package:random_background_color/presentation/pages/initial_page.dart';
 
-class HomePage extends StatefulWidget {
+import 'error_page.dart';
+
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final generator = RandomColorGenerator();
-  Color backgroundColor = const Color(0xFF000000);
-
-  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          backgroundColor = generator.getColorFromARGB();
-        });
-      },
-      child: Scaffold(
-        backgroundColor: backgroundColor,
-        body: const Center(
-          child: Text(AppTexts.initialText),
+    final state = context.watch<ColorBloc>().state;
+
+    if (state is ColorInitial) {
+      return const InitialPage();
+    } else if (state is ColorChanged) {
+      return GestureDetector(
+        onTap: () {
+          context.read<ColorBloc>().add(ColorChangedByTap());
+        },
+        child: Scaffold(
+          backgroundColor: state.backgroundColor,
+          body: const Center(
+            child: Text(AppTexts.initialText),
+          ),
         ),
-      ),
-    );
+      );
+    }
+
+    return const ErrorPage();
   }
 }
