@@ -18,7 +18,7 @@ class InitialPage extends StatelessWidget {
             const Text('How we change the color?'),
             ElevatedButton(
               onPressed: () {
-                context.read<ColorBloc>().add(ColorStart());
+                context.read<ColorBloc>().add(ColorStartChangeManually());
               },
               child: const Text('Manually'),
             ),

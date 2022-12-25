@@ -19,12 +19,22 @@ class HomePage extends StatelessWidget {
     } else if (state is ColorChanged) {
       return GestureDetector(
         onTap: () {
-          context.read<ColorBloc>().add(ColorChangedByTap());
+          context.read<ColorBloc>().add(ColorChangedManually());
         },
         child: Scaffold(
           backgroundColor: state.backgroundColor,
           body: const Center(
             child: Text(AppTexts.initialText),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              context.read<ColorBloc>().add(ColorStart());
+            },
+            backgroundColor: Colors.white,
+            child: const Icon(
+              Icons.close,
+              color: Colors.black,
+            ),
           ),
         ),
       );

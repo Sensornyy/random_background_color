@@ -11,10 +11,15 @@ part 'color_state.dart';
 class ColorBloc extends Bloc<ColorEvent, ColorState> {
   ColorBloc() : super(ColorInitial()) {
     on<ColorStart>((event, emit) {
+      emit(ColorInitial());
+      print(state);
+    });
+
+    on<ColorStartChangeManually>((event, emit) {
       emit(const ColorChanged(backgroundColor: Color(0xFF000000)));
     });
 
-    on<ColorChangedByTap>((event, emit) {
+    on<ColorChangedManually>((event, emit) {
       final generator = RandomColorGenerator();
 
       emit(ColorChanged(backgroundColor: generator.getColorFromARGB()));
@@ -24,8 +29,13 @@ class ColorBloc extends Bloc<ColorEvent, ColorState> {
       final generator = RandomColorGenerator();
 
       while (true) {
-        await Future.delayed(const Duration(milliseconds: 500));
         emit(ColorChanged(backgroundColor: generator.getColorFromARGB()));
+
+        await Future.delayed(const Duration(milliseconds: 500));
+
+        if (state is ColorInitial) {
+          break;
+        }
       }
     });
   }

@@ -9,6 +9,8 @@ abstract class ColorEvent extends Equatable {
 
 class ColorStart extends ColorEvent {}
 
-class ColorChangedByTap extends ColorEvent {}
+class ColorStartChangeManually extends ColorEvent {}
+
+class ColorChangedManually extends ColorEvent {}
 
 class ColorChangedAutomatically extends ColorEvent {}
